@@ -1,25 +1,56 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Connexion</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <meta charset="utf-8"/>
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
-    <h2>Connexion</h2>
+<div class="container">
 
-    <form method="post" action="/login">
-        <label>Nom d'utilisateur:</label>
-        <input type="text" name="username" required>
+    <div class="row mt-4 mb-3">
+        <h2>Login</h2>
+    </div>
 
-        <label>Mot de passe:</label>
-        <input type="password" name="password" required>
+    <div class="row">
+        <form th:action="@{/login}" method="post" class="form-horizontal" style="width: 100%">
 
-        <button type="submit">Se connecter</button>
-    </form>
+            <!-- Username -->
+            <div class="form-group mb-3">
+                <label for="username" class="col-sm-2 control-label">Username</label>
+                <div class="col-sm-10">
+                    <input type="text" id="username" name="username" placeholder="Username" class="form-control" required>
+                </div>
+            </div>
 
-    <!-- Affichage des messages d'erreur -->
-    <p th:if="${param.error}" style="color: red;">Identifiants incorrects.</p>
-    <p th:if="${param.logout}" style="color: green;">Vous êtes déconnecté.</p>
+            <!-- Password -->
+            <div class="form-group mb-3">
+                <label for="password" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" id="password" name="password" placeholder="Password" class="form-control" required>
+                </div>
+            </div>
+
+            <!-- Error/Logout messages -->
+            <div class="form-group mb-3">
+                <div class="col-sm-10 offset-sm-2">
+                    <p class="text-danger" th:if="${param.error}">Identifiants incorrects.</p>
+                    <p class="text-success" th:if="${param.logout}">Vous êtes déconnecté.</p>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="form-group">
+                <div class="col-sm-10 offset-sm-2">
+                    <a class="btn btn-secondary btn-sm" href="/">Retour</a>
+                    <button type="submit" class="btn btn-primary btn-sm">Se connecter</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</div>
 </body>
 </html>
