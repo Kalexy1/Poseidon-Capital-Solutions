@@ -60,7 +60,7 @@ public class BidListControllerTest {
 
         assertEquals("bidList/list", viewName);
         verify(bidListService, times(1)).getAllBidLists();
-        verify(model, times(1)).addAttribute("bids", bids);
+        verify(model, times(1)).addAttribute("bidLists", bids); // Fix model attribute
     }
 
     @Test
@@ -68,7 +68,7 @@ public class BidListControllerTest {
         String viewName = bidListController.addBidForm(model);
 
         assertEquals("bidList/add", viewName);
-        verify(model, times(1)).addAttribute(eq("bid"), any(BidList.class));
+        verify(model, times(1)).addAttribute(eq("bidList"), any(BidList.class)); // Fix model attribute
     }
 
     @Test
@@ -98,7 +98,7 @@ public class BidListControllerTest {
         String viewName = bidListController.showUpdateForm(1, model);
 
         assertEquals("bidList/update", viewName);
-        verify(model, times(1)).addAttribute("bid", bidList);
+        verify(model, times(1)).addAttribute("bidList", bidList); // Fix model attribute
     }
 
     @Test

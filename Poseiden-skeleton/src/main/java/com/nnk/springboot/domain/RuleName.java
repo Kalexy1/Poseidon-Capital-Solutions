@@ -3,9 +3,17 @@ package com.nnk.springboot.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+/**
+ * Représente une règle métier utilisée dans le système.
+ * <p>
+ * Une règle comprend un nom, une description, une structure JSON, un modèle,
+ * ainsi que des requêtes SQL associées.
+ * </p>
+ */
 @Entity
 @Table(name = "rulename")
 public class RuleName {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -19,9 +27,21 @@ public class RuleName {
     private String sqlStr;
     private String sqlPart;
 
-    // --- Constructeurs ---
+    /**
+     * Constructeur par défaut.
+     */
     public RuleName() {}
 
+    /**
+     * Constructeur avec tous les champs principaux.
+     *
+     * @param name        le nom de la règle
+     * @param description la description de la règle
+     * @param json        la structure JSON associée
+     * @param template    le modèle de règle
+     * @param sqlStr      la requête SQL principale
+     * @param sqlPart     la sous-partie de la requête SQL
+     */
     public RuleName(String name, String description, String json, String template, String sqlStr, String sqlPart) {
         this.name = name;
         this.description = description;
@@ -30,27 +50,102 @@ public class RuleName {
         this.sqlStr = sqlStr;
         this.sqlPart = sqlPart;
     }
-    
-    // --- Getters et Setters ---
 
-    public Integer getId() {return id;}
-    public void setId(Integer id) {this.id = id;}
+    /**
+     * @return l'identifiant de la règle
+     */
+    public Integer getId() {
+        return id;
+    }
 
-    public String getName() {return name;}
-    public void setName(String name) {this.name = name;}
+    /**
+     * @param id l'identifiant à définir
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-    public String getDescription() {return description;}
-    public void setDescription(String description) {this.description = description;}
+    /**
+     * @return le nom de la règle
+     */
+    public String getName() {
+        return name;
+    }
 
-    public String getJson() {return json;}
-    public void setJson(String json) {this.json = json;}
+    /**
+     * @param name le nom à définir
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public String getTemplate() {return template;}
-    public void setTemplate(String template) {this.template = template;}
+    /**
+     * @return la description de la règle
+     */
+    public String getDescription() {
+        return description;
+    }
 
-    public String getSqlStr() {return sqlStr;}
-    public void setSqlStr(String sqlStr) {this.sqlStr = sqlStr;}
+    /**
+     * @param description la description à définir
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-    public String getSqlPart() {return sqlPart;}
-    public void setSqlPart(String sqlPart) {this.sqlPart = sqlPart;}
+    /**
+     * @return la structure JSON de la règle
+     */
+    public String getJson() {
+        return json;
+    }
+
+    /**
+     * @param json la structure JSON à définir
+     */
+    public void setJson(String json) {
+        this.json = json;
+    }
+
+    /**
+     * @return le modèle (template) associé à la règle
+     */
+    public String getTemplate() {
+        return template;
+    }
+
+    /**
+     * @param template le modèle à définir
+     */
+    public void setTemplate(String template) {
+        this.template = template;
+    }
+
+    /**
+     * @return la requête SQL principale
+     */
+    public String getSqlStr() {
+        return sqlStr;
+    }
+
+    /**
+     * @param sqlStr la requête SQL à définir
+     */
+    public void setSqlStr(String sqlStr) {
+        this.sqlStr = sqlStr;
+    }
+
+    /**
+     * @return la sous-requête SQL ou partie de requête
+     */
+    public String getSqlPart() {
+        return sqlPart;
+    }
+
+    /**
+     * @param sqlPart la sous-requête SQL à définir
+     */
+    public void setSqlPart(String sqlPart) {
+        this.sqlPart = sqlPart;
+    }
 }

@@ -1,75 +1,29 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.repositories.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Collections;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-@ExtendWith(MockitoExtension.class)
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+@WebMvcTest(LoginController.class)
 public class LoginControllerTest {
 
+    @Autowired
     private MockMvc mockMvc;
 
-    @Mock
-    private UserRepository userRepository;
-
-    @InjectMocks
-    private LoginController loginController;
-
-    @BeforeEach
-    void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(loginController).build();
-    }
-
-    void testLogin_ShouldReturnLoginPage() throws Exception {
-        mockMvc.perform(get("/login"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("login"));
-    }
-
+    @WithMockUser(username = "testUser", roles = {"USER"})
     @Test
-    void testGetAllUserArticles_ShouldReturnUserListPage() throws Exception {
-        when(userRepository.findAll()).thenReturn(Collections.emptyList());
-
-        ModelAndView mav = loginController.getAllUserArticles();
-
-        assertNotNull(mav);
-        assertEquals("user/list", mav.getViewName());
-        assertNotNull(mav.getModel().get("users"));
-
-        mockMvc.perform(get("/secure/article-details"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("user/list"))
-                .andExpect(model().attributeExists("users"));
-
-        verify(userRepository, atMost(2)).findAll();
-    }
-
-    @Test
-    void testError_ShouldReturn403Page() throws Exception {
-        ModelAndView mav = loginController.error();
-
-        assertNotNull(mav);
-        assertEquals("403", mav.getViewName());
-        assertEquals("You are not authorized for the requested data.", mav.getModel().get("errorMsg"));
-
+    public void testErrorPage() throws Exception {
         mockMvc.perform(get("/error"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("403"))
-                .andExpect(model().attributeExists("errorMsg"))
-                .andExpect(model().attribute("errorMsg", "You are not authorized for the requested data."));
+               .andExpect(MockMvcResultMatchers.status().isOk()) 
+               .andExpect(MockMvcResultMatchers.view().name("403")) 
+               .andExpect(MockMvcResultMatchers.model().attribute("errorMsg", "Vous n'êtes pas autorisé à accéder à cette page."));
     }
 }

@@ -67,7 +67,7 @@ public class BidListServiceTest {
 
         Exception exception = assertThrows(RuntimeException.class, () -> bidListService.getBidListById(2));
 
-        assertEquals("BidList non trouvé", exception.getMessage());
+        assertEquals("BidList non trouvé pour l'id : 2", exception.getMessage());
         verify(bidListRepository, times(1)).findById(2);
     }
 

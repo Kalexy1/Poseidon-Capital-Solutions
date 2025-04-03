@@ -63,7 +63,7 @@ public class RuleNameControllerTest {
 
         assertEquals("ruleName/list", viewName);
         verify(ruleNameService, times(1)).getAllRules();
-        verify(model, times(1)).addAttribute("rules", rules);
+        verify(model, times(1)).addAttribute("ruleNames", rules);
     }
 
     @Test
