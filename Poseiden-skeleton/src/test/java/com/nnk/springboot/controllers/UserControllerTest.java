@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
@@ -18,8 +19,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
 public class UserControllerTest {
@@ -28,6 +28,9 @@ public class UserControllerTest {
 
     @Mock
     private UserService userService;
+
+    @Mock
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Mock
     private Model model;
@@ -49,10 +52,13 @@ public class UserControllerTest {
         user.setRole("USER");
 
         mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+
+        // Mock lenient pour éviter UnnecessaryStubbingException
+        lenient().when(passwordEncoder.encode(any(CharSequence.class))).thenReturn("encodedPassword");
     }
 
     @Test
-    void testHome_ShouldReturnUserListPage() throws Exception {
+    void testHome_ShouldReturnUserListPage() {
         List<User> users = Arrays.asList(user);
         when(userService.getAllUsers()).thenReturn(users);
 
@@ -64,7 +70,7 @@ public class UserControllerTest {
     }
 
     @Test
-    void testAddUserForm_ShouldReturnAddPage() throws Exception {
+    void testAddUserForm_ShouldReturnAddPage() {
         String viewName = userController.addUserForm(model);
 
         assertEquals("user/add", viewName);
@@ -104,6 +110,7 @@ public class UserControllerTest {
     @Test
     void testUpdateUser_ShouldUpdateUserAndRedirect() {
         when(bindingResult.hasErrors()).thenReturn(false);
+        when(userService.getUserById(1)).thenReturn(user);
 
         String viewName = userController.updateUser(1, user, bindingResult, model);
 
