@@ -3,6 +3,8 @@ package com.nnk.springboot.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 import java.sql.Timestamp;
 
 /**
@@ -30,18 +32,22 @@ public class Trade {
     private String type;
 
     @NotNull(message = "La quantité achetée est requise")
+    @Positive(message = "Bid quantity must be greater than 0")
     @Column(name = "buyQuantity")
     private Double buyQuantity;
 
     @NotNull(message = "La quantité vendue est requise")
+    @Positive(message = "Bid quantity must be greater than 0")
     @Column(name = "sellQuantity")
     private Double sellQuantity;
 
     @NotNull(message = "Le prix d'achat est requis")
+    @Positive(message = "Bid quantity must be greater than 0")
     @Column(name = "buyPrice")
     private Double buyPrice;
 
     @NotNull(message = "Le prix de vente est requis")
+    @Positive(message = "Bid quantity must be greater than 0")
     @Column(name = "sellPrice")
     private Double sellPrice;
 

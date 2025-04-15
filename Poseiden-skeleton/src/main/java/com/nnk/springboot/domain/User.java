@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -38,9 +39,23 @@ public class User {
     private String username;
 
     /**
-     * Mot de passe (hashé) de l'utilisateur.
+     * Mot de passe de l'utilisateur.
+     * <p>
+     * Le mot de passe doit :
+     * <ul>
+     *     <li>contenir au moins 8 caractères</li>
+     *     <li>contenir au moins une lettre majuscule</li>
+     *     <li>contenir au moins un chiffre</li>
+     *     <li>contenir au moins un caractère spécial</li>
+     * </ul>
+     * </p>
      */
     @NotBlank(message = "Password is mandatory")
+    @Pattern(
+        regexp = "^(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-={}:\";'<>?,./\\\\]).{8,}$",
+        message = "Password must be at least 8 characters long and include at least one uppercase letter, one number, and one special character"
+    )
+    
     private String password;
 
     /**

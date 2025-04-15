@@ -3,6 +3,8 @@ package com.nnk.springboot.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 import java.sql.Timestamp;
 
 /**
@@ -30,21 +32,19 @@ public class BidList {
 
     /** Quantité offerte */
     @NotNull(message = "La quantité est requise")
+    @Positive(message = "Bid quantity must be greater than 0")
     @Column(name = "bidQuantity")
     private Double bidQuantity;
 
     /** Quantité demandée */
-    @NotNull(message = "La quantité demandée est requise")
     @Column(name = "askQuantity")
     private Double askQuantity;
 
     /** Prix d'achat */
-    @NotNull(message = "Le prix d'achat est requis")
     @Column(name = "bid")
     private Double bid;
 
     /** Prix de vente */
-    @NotNull(message = "Le prix de vente est requis")
     @Column(name = "ask")
     private Double ask;
 

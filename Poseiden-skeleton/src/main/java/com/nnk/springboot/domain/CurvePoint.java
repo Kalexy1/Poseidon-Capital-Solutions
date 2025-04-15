@@ -2,6 +2,8 @@ package com.nnk.springboot.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -25,9 +27,11 @@ public class CurvePoint {
     private Timestamp asOfDate;
 
     @NotNull(message = "Le terme est requis")
+    @Positive(message = "Bid quantity must be greater than 0")
     private Double term;
 
     @NotNull(message = "La valeur est requise")
+    @Positive(message = "Bid quantity must be greater than 0")
     private Double value;
 
     @Column(name = "creation_date")
