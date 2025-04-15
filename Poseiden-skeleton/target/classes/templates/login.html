@@ -2,55 +2,63 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8"/>
-    <title>Login</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <meta charset="UTF-8"/>
+    <title>Login Screen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 60px;
+        }
+        .login-container {
+            display: inline-block;
+            text-align: left;
+            border: 1px solid #ccc;
+            padding: 20px 30px;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+        }
+        .login-subtitle {
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        label {
+            display: inline-block;
+            width: 80px;
+        }
+        input[type="text"], input[type="password"] {
+            width: 200px;
+            padding: 4px;
+            margin-bottom: 10px;
+        }
+        input[type="submit"] {
+            margin-top: 10px;
+            padding: 4px 12px;
+        }
+        h2 {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
+    <h2>Login Screen</h2>
 
-    <div class="row mt-4 mb-3">
-        <h2>Login</h2>
-    </div>
+    <div class="login-container">
+        <div class="login-subtitle">Login with Username and Password</div>
 
-    <div class="row">
-        <form th:action="@{/login}" method="post" class="form-horizontal" style="width: 100%">
-
-            <!-- Username -->
-            <div class="form-group mb-3">
-                <label for="username" class="col-sm-2 control-label">Username</label>
-                <div class="col-sm-10">
-                    <input type="text" id="username" name="username" placeholder="Username" class="form-control" required>
-                </div>
+        <form th:action="@{/login}" method="post">
+            <div>
+                <label for="username">User:</label>
+                <input type="text" id="username" name="username" required autofocus />
             </div>
-
-            <!-- Password -->
-            <div class="form-group mb-3">
-                <label for="password" class="col-sm-2 control-label">Password</label>
-                <div class="col-sm-10">
-                    <input type="password" id="password" name="password" placeholder="Password" class="form-control" required>
-                </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required />
             </div>
-
-            <!-- Error/Logout messages -->
-            <div class="form-group mb-3">
-                <div class="col-sm-10 offset-sm-2">
-                    <p class="text-danger" th:if="${param.error}">Identifiants incorrects.</p>
-                    <p class="text-success" th:if="${param.logout}">Vous êtes déconnecté.</p>
-                </div>
+            <div>
+                <input type="submit" value="Login"/>
             </div>
-
-            <!-- Buttons -->
-            <div class="form-group">
-                <div class="col-sm-10 offset-sm-2">
-                    <a class="btn btn-secondary btn-sm" href="/">Retour</a>
-                    <button type="submit" class="btn btn-primary btn-sm">Se connecter</button>
-                </div>
-            </div>
-
         </form>
     </div>
-
-</div>
 </body>
 </html>

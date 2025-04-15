@@ -33,14 +33,23 @@
                 </div>
             </div>
 
-            <!-- Password -->
-            <div class="form-group">
-                <label for="password" class="col-sm-2 control-label">Password</label>
-                <div class="col-sm-10">
-                    <input type="password" th:field="*{password}" id="password" placeholder="Password" class="col-4">
-                    <p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
-                </div>
-            </div>
+			<!-- Password -->
+			<div class="form-group">
+			    <label for="password" class="col-sm-2 control-label">Password</label>
+			    <div class="col-sm-10">
+			        <input type="password"
+			               th:field="*{password}"
+			               id="password"
+			               placeholder="Password"
+			               class="col-4"
+			               pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-={}:\";'<>?,./\\]).{8,}$"
+			               title="At least 8 characters, one uppercase letter, one number, and one special character">
+			        <p class="text-info">
+			            Must be at least 8 characters and include one uppercase letter, one number, and one special character.
+			        </p>
+			        <p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+			    </div>
+			</div>
 
             <!-- Role -->
             <div class="form-group">
