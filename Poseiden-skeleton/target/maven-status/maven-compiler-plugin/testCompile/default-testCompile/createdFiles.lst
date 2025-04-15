@@ -16,6 +16,5 @@ com\nnk\springboot\controllers\HomeControllerTest.class
 com\nnk\springboot\controllers\LoginControllerTest.class
 com\nnk\springboot\services\BidListServiceTest.class
 com\nnk\springboot\services\RuleNameServiceTest.class
-com\nnk\springboot\CurvePointTests.class
 com\nnk\springboot\TradeTests.class
 com\nnk\springboot\controllers\UserControllerTest.class
