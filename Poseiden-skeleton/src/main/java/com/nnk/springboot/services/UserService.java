@@ -72,7 +72,10 @@ public class UserService {
      * @return l'utilisateur enregistré
      */
     public User saveUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    	System.out.println("Mot de passe avant encodage : " + user.getPassword());
+    	user.setPassword(passwordEncoder.encode(user.getPassword()));
+    	System.out.println("Mot de passe après encodage : " + user.getPassword());
+
         return userRepository.save(user);
     }
 

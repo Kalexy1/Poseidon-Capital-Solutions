@@ -53,7 +53,6 @@ public class UserControllerTest {
 
         mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
 
-        // Mock lenient pour éviter UnnecessaryStubbingException
         lenient().when(passwordEncoder.encode(any(CharSequence.class))).thenReturn("encodedPassword");
     }
 
@@ -110,13 +109,13 @@ public class UserControllerTest {
     @Test
     void testUpdateUser_ShouldUpdateUserAndRedirect() {
         when(bindingResult.hasErrors()).thenReturn(false);
-        when(userService.getUserById(1)).thenReturn(user);
 
         String viewName = userController.updateUser(1, user, bindingResult, model);
 
         assertEquals("redirect:/user/list", viewName);
         verify(userService, times(1)).updateUser(1, user);
     }
+
 
     @Test
     void testUpdateUser_ShouldReturnUpdatePageIfErrors() {

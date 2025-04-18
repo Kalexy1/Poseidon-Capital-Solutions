@@ -3,7 +3,6 @@ package com.nnk.springboot.controllers;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,9 +24,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
 
     /**
      * Affiche la liste de tous les utilisateurs.
@@ -56,7 +52,9 @@ public class UserController {
 
     /**
      * Valide et enregistre un nouvel utilisateur.
-     * Le mot de passe est encodé avant enregistrement.
+     * <p>
+     * Le mot de passe est encodé dans {@link UserService#saveUser(User)}.
+     * </p>
      *
      * @param user   l'objet utilisateur à enregistrer
      * @param result le résultat de la validation
@@ -68,8 +66,8 @@ public class UserController {
         if (result.hasErrors()) {
             return "user/add";
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.saveUser(user);
+
+        userService.saveUser(user); // l'encodage se fait ici, pas besoin de le refaire dans le contrôleur
         return "redirect:/user/list";
     }
 
@@ -83,15 +81,17 @@ public class UserController {
     @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         User user = userService.getUserById(id);
-        user.setPassword(""); // on vide le champ pour ne pas afficher le mot de passe hashé
+        user.setPassword(""); // Ne pas afficher le mot de passe encodé
         model.addAttribute("user", user);
         return "user/update";
     }
 
     /**
      * Valide et met à jour les informations d’un utilisateur.
-     * Si le mot de passe est renseigné, il est encodé avant mise à jour.
-     * Sinon, l’ancien mot de passe est conservé.
+     * <p>
+     * Le mot de passe est encodé uniquement si le champ n’est pas vide.
+     * Sinon, l'ancien mot de passe est conservé.
+     * </p>
      *
      * @param id     l'identifiant de l'utilisateur
      * @param user   les données mises à jour
@@ -100,22 +100,15 @@ public class UserController {
      * @return redirection vers la liste ou retour au formulaire si erreur
      */
     @PostMapping("/update/{id}")
-    public String updateUser(@PathVariable("id") Integer id, @Valid @ModelAttribute("user") User user,
-                             BindingResult result, Model model) {
+    public String updateUser(@PathVariable("id") Integer id,
+                             @Valid @ModelAttribute("user") User user,
+                             BindingResult result,
+                             Model model) {
         if (result.hasErrors()) {
             return "user/update";
         }
 
-        // Récupérer l'utilisateur existant pour conserver le mot de passe si vide
-        User existingUser = userService.getUserById(id);
-
-        if (user.getPassword() == null || user.getPassword().isBlank()) {
-            user.setPassword(existingUser.getPassword()); // conserver l'ancien mot de passe
-        } else {
-            user.setPassword(passwordEncoder.encode(user.getPassword())); // encoder le nouveau
-        }
-
-        userService.updateUser(id, user);
+        userService.updateUser(id, user); // l'encodage et la conservation du mot de passe sont gérés ici
         return "redirect:/user/list";
     }
 
