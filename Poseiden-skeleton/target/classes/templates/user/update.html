@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8"/>
     <title>Update User</title>
-    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
 <div class="container">
@@ -15,6 +15,7 @@
 
     <div class="row">
         <form th:action="@{/user/update/{id}(id=${user.id})}" th:object="${user}" method="post" class="form-horizontal" style="width: 100%">
+
             <!-- Full Name -->
             <div class="form-group">
                 <label for="fullname" class="col-sm-2 control-label">Full Name</label>
@@ -42,7 +43,7 @@
 			               id="password"
 			               placeholder="Password"
 			               class="col-4"
-			               pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-={}:\";'<>?,./\\]).{8,}$"
+			               pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-={}:;'<>?,./\\]).{8,}$"
 			               title="At least 8 characters, one uppercase letter, one number, and one special character">
 			        <p class="text-info">
 			            Must be at least 8 characters and include one uppercase letter, one number, and one special character.
@@ -56,10 +57,10 @@
                 <label class="col-sm-2 control-label">Role</label>
                 <div class="col-sm-10">
                     <label class="checkbox-inline">
-                        <input type="radio" th:field="*{role}" th:value="ADMIN">Admin
+                        <input type="radio" th:field="*{role}" th:value="'ADMIN'"> Admin
                     </label>
                     <label class="checkbox-inline">
-                        <input type="radio" th:field="*{role}" th:value="USER">User
+                        <input type="radio" th:field="*{role}" th:value="'USER'"> User
                     </label>
                     <p class="text-danger" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></p>
                 </div>
@@ -69,10 +70,11 @@
             <div class="form-group">
                 <div class="col-sm-12">
                     <input type="hidden" th:field="*{id}">
-                    <a class="btn btn-danger btn-sm" href="/user/list">Cancel</a>
+                    <a class="btn btn-danger btn-sm" th:href="@{/user/list}">Cancel</a>
                     <input class="btn btn-primary btn-sm" type="submit" value="Update User">
                 </div>
             </div>
+
         </form>
     </div>
 

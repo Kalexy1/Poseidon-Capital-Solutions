@@ -52,23 +52,23 @@
                 </div>
             </div>
 
-            <!-- Buy Price -->
-            <div class="form-group">
-                <label for="buyPrice" class="col-sm-2 control-label">Buy Price</label>
-                <div class="col-sm-10">
-                    <input type="number" th:field="*{buyPrice}" id="buyPrice" placeholder="Buy Price" class="col-4">
-                    <p class="text-danger" th:if="${#fields.hasErrors('buyPrice')}" th:errors="*{buyPrice}"></p>
-                </div>
-            </div>
+			<!-- Buy Price -->
+			<div class="form-group">
+			    <label for="buyPrice" class="col-sm-2 control-label">Buy Price</label>
+			    <div class="col-sm-10">
+			        <input type="number" th:field="*{buyPrice}" id="buyPrice" placeholder="Buy Price" class="col-4" step="0.01" min="0">
+			        <p class="text-danger" th:if="${#fields.hasErrors('buyPrice')}" th:errors="*{buyPrice}"></p>
+			    </div>
+			</div>
 
-            <!-- Sell Price -->
-            <div class="form-group">
-                <label for="sellPrice" class="col-sm-2 control-label">Sell Price</label>
-                <div class="col-sm-10">
-                    <input type="number" th:field="*{sellPrice}" id="sellPrice" placeholder="Sell Price" class="col-4">
-                    <p class="text-danger" th:if="${#fields.hasErrors('sellPrice')}" th:errors="*{sellPrice}"></p>
-                </div>
-            </div>
+			<!-- Sell Price -->
+			<div class="form-group">
+			    <label for="sellPrice" class="col-sm-2 control-label">Sell Price</label>
+			    <div class="col-sm-10">
+			        <input type="number" th:field="*{sellPrice}" id="sellPrice" placeholder="Sell Price" class="col-4" step="0.01" min="0">
+			        <p class="text-danger" th:if="${#fields.hasErrors('sellPrice')}" th:errors="*{sellPrice}"></p>
+			    </div>
+			</div>
 
             <!-- Hidden ID + Buttons -->
             <div class="form-group">
