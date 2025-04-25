@@ -88,8 +88,8 @@ public class SecurityConfig {
                 authorizeRequests
                     .requestMatchers("/", "/login", "/register", "/user/validate", "/user/add").permitAll()
                     .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
-                    .requestMatchers("/user/list", "/bidList/**", "/curvePoint/**", "/rating/**", "/ruleName/**", "/trade/**").authenticated()
-                    .requestMatchers("/user/update/**", "/user/delete/**").hasRole("ADMIN")
+                    .requestMatchers("/bidList/**", "/curvePoint/**", "/rating/**", "/ruleName/**", "/trade/**").authenticated()
+                    .requestMatchers("/user/list","/user/update/**", "/user/delete/**").hasRole("ADMIN")
                     .anyRequest().authenticated()
             )
             .formLogin(formLogin ->
